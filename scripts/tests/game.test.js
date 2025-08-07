@@ -1,5 +1,9 @@
 const { game, newGame, showScore, addTurn, lightsOn, showTurns, playerTurn } = require("../game");
 
+
+/**
+ * method used to "listen " for alerts in the game
+ */
 jest.spyOn(window, "alert").mockImplementation(() => { });
 
 beforeAll(() => {
@@ -99,6 +103,12 @@ describe("gameplay works correctly", () => {
         game.playerMoves.push(game.currentGame[0]);
         playerTurn();
         expect(game.score).toBe(1);
+    });
+
+    test("should call an alers if the move is wrong", () => {
+        game.playerMoves.push("wrong");
+        playerTurn();
+        expect(window.alert).toBeCalledWith("Wrong move!");
     });
     test("clicking during computer sequence should fail", () => {
         showTurns();
